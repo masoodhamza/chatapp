@@ -1,12 +1,10 @@
-// Responsible for running the application
+//application running methods
 
-// DOM query
+//update chat list
 const chatList = document.querySelector(".chat-list");
 
-// Update UI
+//get new message
 const newChatForm = document.querySelector(".new-chat");
-
-// attach an event listener on submit.
 newChatForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const message = newChatForm.message.value.trim();
@@ -16,49 +14,53 @@ newChatForm.addEventListener("submit", (e) => {
     .catch((err) => console.log(err));
 });
 
-// update username.
+//update username
 const newNameForm = document.querySelector(".new-name");
-// show notification message
+
+//update alert message
 const updateMsg = document.querySelector(".update-msg");
 
 newNameForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const newName = newNameForm.name.value.trim();
   chatroom.updateName(newName);
-  // reset the form
   newNameForm.reset();
 
-  // show success/failure message to the user.
-  updateMsg.innerText = `Your name was updated to ${newName}`;
-  // hide the message
-  setTimeout(() => (updateMsg.innerText = ""), 3000);
+  //show message
+  updateMsg.innerHTML = `Your name updated ot ${newName}`;
+  setTimeout(() => (updateMsg.innerHTML = ""), 3000);
 });
 
-// Update the room.
+//update room
 const rooms = document.querySelector(".chat-rooms");
 
 rooms.addEventListener("click", (e) => {
   e.preventDefault();
   if (e.target.tagName === "BUTTON") {
-    // 1. clear the old UI
+    //clear old UI
     chatUI.clear();
-    // 2. update the room via updateRoom method on our chat class
-    chatroom.updateRoom(e.target.getAttribute("id"));
-    // 3. we will fetch all the chats of that room
+
+    //update room name
+    const chatroom = e.target.getAttribute("id");
+    localStorage.setItem("chatroom", chatroom);
+    chatroom.updateRoom(chatroom);
+
+    //fetch chats for updated room
     chatroom.getChats((chat) => {
       chatUI.render(chat);
     });
   }
 });
 
-// get username from local storage.
-const username = localStorage.username ? localStorage.username : "Anon";
+//get username from localstorage
+const username = localStorage.username ? localStorage.username : "Unknown";
+const chatroomname = localStorage.chatroom ? localStorage.chatroom : "general";
 
-// Class Instances
+//class instaces
 const chatUI = new ChatUI(chatList);
-const chatroom = new Chatroom(username, "music");
+const chatroom = new Chatroom(username, chatroomname);
 
-// Get chats
+//get chats
 chatroom.getChats((data) => {
   chatUI.render(data);
   console.log(data);
