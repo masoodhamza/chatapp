@@ -31,7 +31,7 @@ class Chatroom {
       .orderBy("created_at")
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
-          if (change === "added") {
+          if (change.type === "added") {
             //update ui
             callback(change.doc.data());
           }

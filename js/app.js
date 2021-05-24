@@ -1,4 +1,10 @@
 //application running methods
+//get username from localstorage
+const username = localStorage.username ? localStorage.username : "Unknown";
+const chatroomname = localStorage.chatroom ? localStorage.chatroom : "general";
+//add username
+const usernamelabel = document.querySelector("#usernamelabel");
+usernamelabel.innerHTML = username;
 
 //update chat list
 const chatList = document.querySelector(".chat-list");
@@ -25,6 +31,7 @@ newNameForm.addEventListener("submit", (e) => {
   const newName = newNameForm.name.value.trim();
   chatroom.updateName(newName);
   newNameForm.reset();
+  usernamelabel.innerHTML = newName;
 
   //show message
   updateMsg.innerHTML = `Your name updated ot ${newName}`;
@@ -51,10 +58,6 @@ rooms.addEventListener("click", (e) => {
     });
   }
 });
-
-//get username from localstorage
-const username = localStorage.username ? localStorage.username : "Unknown";
-const chatroomname = localStorage.chatroom ? localStorage.chatroom : "general";
 
 //class instaces
 const chatUI = new ChatUI(chatList);
