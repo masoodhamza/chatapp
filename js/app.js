@@ -41,9 +41,9 @@ rooms.addEventListener("click", (e) => {
     chatUI.clear();
 
     //update room name
-    const chatroom = e.target.getAttribute("id");
-    localStorage.setItem("chatroom", chatroom);
-    chatroom.updateRoom(chatroom);
+    const chatroomname = e.target.getAttribute("id");
+    localStorage.setItem("chatroom", chatroomname);
+    chatroom.updateRoom(chatroomname);
 
     //fetch chats for updated room
     chatroom.getChats((chat) => {
