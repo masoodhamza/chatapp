@@ -42,6 +42,8 @@ class Chatroom {
   //3. updating the username
   updateName(username) {
     this.username = username;
+    //saving username in localstorage
+    localStorage.setItem("username", username);
   }
 
   //4. updating the room
@@ -51,13 +53,3 @@ class Chatroom {
     if (this.unsub) this.unsub();
   }
 }
-
-const chatroom = new Chatroom("hamza", "general");
-
-chatroom.getChats((data) => console.log(data));
-
-setTimeout(() => {
-  chatroom.updateRoom("general");
-  chatroom.getChats((data) => console.log(data));
-  chatroom.addChat("hi");
-}, 3000);
